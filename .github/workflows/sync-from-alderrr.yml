@@ -1,0 +1,43 @@
+name: Sync from alderrr gh-pages
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/30 * * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout alifdermayudha.github.io
+        uses: actions/checkout@v4
+        with:
+          path: target-site
+
+      - name: Checkout alderrr gh-pages branch
+        uses: actions/checkout@v4
+        with:
+          repository: alderrr/alderrr.github.io
+          ref: gh-pages
+          path: source-site
+
+      - name: Copy built site from alderrr to alifdermayudha
+        run: |
+          rsync -av --delete \
+            --exclude ".git" \
+            --exclude ".github" \
+            --exclude "CNAME" \
+            source-site/ target-site/
+
+      - name: Commit and push changes
+        run: |
+          cd target-site
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Sync from alderrr gh-pages" || exit 0
+          git push

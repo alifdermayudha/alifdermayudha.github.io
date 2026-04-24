@@ -14,12 +14,12 @@ jobs:
 
     steps:
       - name: Checkout alifdermayudha.github.io
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           path: target-site
 
       - name: Checkout alderrr gh-pages branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: alderrr/alderrr.github.io
           ref: gh-pages

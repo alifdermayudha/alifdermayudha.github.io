@@ -3,7 +3,8 @@ name: Sync from alderrr gh-pages
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "0 3 * * *"
+      timezone: "Asia/Jakarta"
 
 permissions:
   contents: write
